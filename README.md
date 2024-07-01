@@ -22,8 +22,8 @@ CREATE SCHEMA midterm_bookstore;
 | totalAmountSpent |  DECIMAL(10,2)   |
 | registrationDate |       DATE       |
 
-```
-CREATE TABLE midterm_bookstore.Customers (
+```sql
+CREATE TABLE Customers (
     customerId VARCHAR(10) PRIMARY KEY,
     customerName VARCHAR(100) NOT NULL,
     customerEmail VARCHAR(100) UNIQUE NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE midterm_bookstore.Customers (
 | authorBio  |     TEXT     |
 
 ```sql
-CREATE TABLE midterm_bookstore.Authors (
+CREATE TABLE Authors (
     authorId INT PRIMARY KEY,
     authorName VARCHAR(100) NOT NULL,
     authorBio TEXT
@@ -58,7 +58,7 @@ CREATE TABLE midterm_bookstore.Authors (
 | publisherAddress | VARCHAR(200) |
 
 ```sql 
-CREATE TABLE midterm_bookstore.Publishers (
+CREATE TABLE Publishers (
     publisherId INT PRIMARY KEY,
     publisherName VARCHAR(100) NOT NULL,
     publisherAddress TEXT
@@ -79,7 +79,7 @@ CREATE TABLE midterm_bookstore.Publishers (
 | bookAverageRating |              DECIMAL(3,2)              |
 
 ```sql 
-CREATE TABLE midterm_bookstore.Books (
+CREATE TABLE Books (
     bookId INT PRIMARY KEY,
     bookTitle VARCHAR(200) NOT NULL,
     bookGenre VARCHAR(100),
@@ -89,8 +89,8 @@ CREATE TABLE midterm_bookstore.Books (
     bookPrice DECIMAL(10, 2),
     publicationDate DATE,
     bookAverageRating DECIMAL(3, 2),
-    FOREIGN KEY (authorId) REFERENCES midterm_bookstore.Authors(authorId),
-    FOREIGN KEY (publisherId) REFERENCES midterm_bookstore.Publishers(publisherId)
+    FOREIGN KEY (authorId) REFERENCES Authors(authorId),
+    FOREIGN KEY (publisherId) REFERENCES Publishers(publisherId)
 );
 ```
 
@@ -106,15 +106,15 @@ CREATE TABLE midterm_bookstore.Books (
 | reviewDate    |   DATE   |
 
 ```sql 
-CREATE TABLE midterm_bookstore.Reviews (
+CREATE TABLE Reviews (
     reviewId INT PRIMARY KEY,
     customerId VARCHAR(10),
     bookId INT,
     reviewRating DECIMAL(2, 1),
     reviewComment TEXT,
     reviewDate DATE,
-    FOREIGN KEY (customerId) REFERENCES midterm_bookstore.Customers(customerId),
-    FOREIGN KEY (bookId) REFERENCES midterm_bookstore.Books(bookId)
+    FOREIGN KEY (customerId) REFERENCES Customers(customerId),
+    FOREIGN KEY (bookId) REFERENCES Books(bookId)
 );
 ```
 #### Purchases Table
@@ -129,21 +129,21 @@ CREATE TABLE midterm_bookstore.Reviews (
 | purchasePrice | DECIMAL(10,2) |
 
 ```sql
-CREATE TABLE midterm_bookstore.Purchases (
+CREATE TABLE Purchases (
     purchaseId INT PRIMARY KEY,
     customerId VARCHAR(10),
     bookId INT,
     purchaseDate DATE,
     purchasePrice DECIMAL(10, 2),
-    FOREIGN KEY (customerId) REFERENCES midterm_bookstore.Customers(customerId),
-    FOREIGN KEY (bookId) REFERENCES midterm_bookstore.Books(bookId)
+    FOREIGN KEY (customerId) REFERENCES Customers(customerId),
+    FOREIGN KEY (bookId) REFERENCES Books(bookId)
 );
 ```
 ## INSERT Data Into Tables
 
 **Inserting Data Into Customers**
 ```sql
-INSERT INTO midterm_bookstore.Customers (customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate)
+INSERT INTO Customers (customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate)
 VALUES 
 ('jtg001', 'Ravi Kumar', 'ravi.k@jvbs.com', 'password123', 150.00, '2023-01-15'),
 ('jtg002', 'Aditi Sharma', 'aditi.s@jvbs.com', 'securepassword', 300.00, '2022-10-05'),
@@ -169,7 +169,7 @@ VALUES
 
 **Inserting Data Into Authors**
 ```sql
-INSERT INTO midterm_bookstore.Authors (authorId, authorName, authorBio)
+INSERT INTO Authors (authorId, authorName, authorBio)
 VALUES 
 (1, 'Chetan Bhagat', 'Chetan Bhagat is an Indian author, columnist, and speaker. He is known for his bestselling novels, which often explore themes of love, relationships, and social issues.'),
 (2, 'Arundhati Roy', 'Arundhati Roy is an Indian author and activist. She gained international fame with her first novel, "The God of Small Things," which won the Man Booker Prize for Fiction in 1997.'),
@@ -195,7 +195,7 @@ VALUES
 
 **Inserting Data Into Publishers**
 ```sql
-INSERT INTO midterm_bookstore.Publishers (publisherId, publisherName, publisherAddress)
+INSERT INTO Publishers (publisherId, publisherName, publisherAddress)
 VALUES 
 (1, 'Penguin Random House India', 'Noida, Uttar Pradesh, India'),
 (2, 'HarperCollins Publishers India', 'Gurugram, Haryana, India'),
@@ -221,7 +221,7 @@ VALUES
 
 **Inserting Data Into Books**
 ```sql
-INSERT INTO midterm_bookstore.Books (bookId, bookTitle, bookGenre, authorId, publisherId, bookFormat, bookPrice, publicationDate, bookAverageRating)
+INSERT INTO Books (bookId, bookTitle, bookGenre, authorId, publisherId, bookFormat, bookPrice, publicationDate, bookAverageRating)
 VALUES 
 (1, 'Five Point Someone', 'Fiction', 1, 1, 'Paperback', 299.00, '2004-05-01', 4.2),
 (2, 'The God of Small Things', 'Fiction', 2, 2, 'Hardcover', 499.00, '1997-05-01', 4.4),
@@ -247,7 +247,7 @@ VALUES
 
 **Inserting Data Into Reviews**
 ```sql
-INSERT INTO midterm_bookstore.Reviews (reviewId, customerId, bookId, reviewRating, reviewComment, reviewDate)
+INSERT INTO Reviews (reviewId, customerId, bookId, reviewRating, reviewComment, reviewDate)
 VALUES 
 (1, 'jtg001', 1, 4.0, 'A compelling read with relatable characters.', '2023-05-01'),
 (2, 'jtg002', 2, 4.5, 'A beautifully written novel with deep themes.', '2023-04-15'),
@@ -273,7 +273,7 @@ VALUES
 
 **Inserting Data Into BookOrders**
 ```sql
-INSERT INTO midterm_bookstore.BookOrders (orderId, customerId, orderDate, totalAmount, orderStatus)
+INSERT INTO BookOrders (orderId, customerId, orderDate, totalAmount, orderStatus)
 VALUES 
 (1, 'jtg001', '2023-06-01', 500.00, 'Completed'),
 (2, 'jtg002', '2023-06-02', 700.00, 'Completed'),
@@ -289,7 +289,7 @@ VALUES
 
 **Inserting Data Into OrderItems**
 ```sql
-INSERT INTO midterm_bookstore.OrderItems (orderItemId, orderId, bookId, quantity, itemPrice)
+INSERT INTO OrderItems (orderItemId, orderId, bookId, quantity, itemPrice)
 VALUES 
 (1, 1, 1, 2, 299.00),
 (2, 2, 2, 1, 499.00),
@@ -363,7 +363,7 @@ LIMIT 10;
 **_Note: Using same statement from above_**
 
 ```sql 
-CREATE TABLE midterm_bookstore.Books (
+CREATE TABLE Books (
     bookId INT PRIMARY KEY,
     bookTitle VARCHAR(200) NOT NULL,
     bookGenre VARCHAR(100),
@@ -373,8 +373,8 @@ CREATE TABLE midterm_bookstore.Books (
     bookPrice DECIMAL(10, 2),
     publicationDate DATE,
     bookAverageRating DECIMAL(3, 2),
-    FOREIGN KEY (authorId) REFERENCES midterm_bookstore.Authors(authorId),
-    FOREIGN KEY (publisherId) REFERENCES midterm_bookstore.Publishers(publisherId)
+    FOREIGN KEY (authorId) REFERENCES Authors(authorId),
+    FOREIGN KEY (publisherId) REFERENCES Publishers(publisherId)
 );
 ```
 
