@@ -117,3 +117,26 @@ CREATE TABLE midterm_bookstore.Reviews (
     FOREIGN KEY (bookId) REFERENCES midterm_bookstore.Books(bookId)
 );
 ```
+#### Purchases Table
+
+| Attribute     |     Type      |
+| ------------- | :-----------: |
+| purchaseId    |   INT (PK)    |
+| customerId    |   INT (FK)    |
+| bookId        |   INT (FK)    |
+| reviewRating  |      INT      |
+| purchaseDate  |     DATE      |
+| purchasePrice | DECIMAL(10,2) |
+
+```sql
+CREATE TABLE midterm_bookstore.Purchases (
+    purchaseId INT PRIMARY KEY,
+    customerId VARCHAR(10),
+    bookId INT,
+    purchaseDate DATE,
+    purchasePrice DECIMAL(10, 2),
+    FOREIGN KEY (customerId) REFERENCES midterm_bookstore.Customers(customerId),
+    FOREIGN KEY (bookId) REFERENCES midterm_bookstore.Books(bookId)
+);
+```
+
