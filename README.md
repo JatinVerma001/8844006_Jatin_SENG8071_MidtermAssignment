@@ -2,14 +2,9 @@
 
 # MidTerm - Online Book Store
 
-
-## Create Schema
 ```sql 
-CREATE SCHEMA midterm_bookstore;
-```
 
-## Table Attributes & CREATE Table Statements
-
+## Table Attributes
 
 ### Customers table
 
@@ -22,16 +17,7 @@ CREATE SCHEMA midterm_bookstore;
 | totalAmountSpent |  DECIMAL(10,2)   |
 | registrationDate |       DATE       |
 
-```sql
-CREATE TABLE Customers (
-    customerId VARCHAR(10) PRIMARY KEY,
-    customerName VARCHAR(100) NOT NULL,
-    customerEmail VARCHAR(100) UNIQUE NOT NULL,
-    customerPassword VARCHAR(100) NOT NULL,
-    totalAmountSpent DECIMAL(10, 2) DEFAULT 0,
-    registrationDate DATE NOT NULL
-);
-```
+
 ### Authors Table
 
 | Attribute  |     Type     |
@@ -39,14 +25,6 @@ CREATE TABLE Customers (
 | authorID   |   INT (PK)   |
 | authorName | VARCHAR(100) |
 | authorBio  |     TEXT     |
-
-```sql
-CREATE TABLE Authors (
-    authorId INT PRIMARY KEY,
-    authorName VARCHAR(100) NOT NULL,
-    authorBio TEXT
-);
-```
 
 
 #### Publishers Table
@@ -57,13 +35,7 @@ CREATE TABLE Authors (
 | publisherName    | VARCHAR(100) |
 | publisherAddress | VARCHAR(200) |
 
-```sql 
-CREATE TABLE Publishers (
-    publisherId INT PRIMARY KEY,
-    publisherName VARCHAR(100) NOT NULL,
-    publisherAddress TEXT
-);
-```
+
 #### Books Table
 
 | Attribute         |                  Type                  |
@@ -78,7 +50,71 @@ CREATE TABLE Publishers (
 | publicationDate   |                  DATE                  |
 | bookAverageRating |              DECIMAL(3,2)              |
 
-```sql 
+
+#### Reviews Table
+
+| Attribute     |   Type   |
+| ------------- | :------: |
+| reviewId      | INT (PK) |
+| customerId    | INT (FK) |
+| bookId        | INT (FK) |
+| reviewRating  |   INT    |
+| reviewComment |   TEXT   |
+| reviewDate    |   DATE   |
+
+#### Purchases Table
+
+| Attribute     |     Type      |
+| ------------- | :-----------: |
+| purchaseId    |   INT (PK)    |
+| customerId    |   INT (FK)    |
+| bookId        |   INT (FK)    |
+| reviewRating  |      INT      |
+| purchaseDate  |     DATE      |
+| purchasePrice | DECIMAL(10,2) |
+```
+
+## CREATE Table Statements: 
+
+```sql
+
+#### CREATING Schema
+
+CREATE SCHEMA midterm_bookstore;
+
+
+### Customers table
+
+CREATE TABLE Customers (
+    customerId VARCHAR(10) PRIMARY KEY,
+    customerName VARCHAR(100) NOT NULL,
+    customerEmail VARCHAR(100) UNIQUE NOT NULL,
+    customerPassword VARCHAR(100) NOT NULL,
+    totalAmountSpent DECIMAL(10, 2) DEFAULT 0,
+    registrationDate DATE NOT NULL
+);
+
+
+### Authors Table
+
+CREATE TABLE Authors (
+    authorId INT PRIMARY KEY,
+    authorName VARCHAR(100) NOT NULL,
+    authorBio TEXT
+);
+
+
+#### Publishers Table
+
+CREATE TABLE Publishers (
+    publisherId INT PRIMARY KEY,
+    publisherName VARCHAR(100) NOT NULL,
+    publisherAddress TEXT
+);
+
+
+#### Books Table
+
 CREATE TABLE Books (
     bookId INT PRIMARY KEY,
     bookTitle VARCHAR(200) NOT NULL,
@@ -92,20 +128,10 @@ CREATE TABLE Books (
     FOREIGN KEY (authorId) REFERENCES Authors(authorId),
     FOREIGN KEY (publisherId) REFERENCES Publishers(publisherId)
 );
-```
+
 
 #### Reviews Table
 
-| Attribute     |   Type   |
-| ------------- | :------: |
-| reviewId      | INT (PK) |
-| customerId    | INT (FK) |
-| bookId        | INT (FK) |
-| reviewRating  |   INT    |
-| reviewComment |   TEXT   |
-| reviewDate    |   DATE   |
-
-```sql 
 CREATE TABLE Reviews (
     reviewId INT PRIMARY KEY,
     customerId VARCHAR(10),
@@ -116,19 +142,10 @@ CREATE TABLE Reviews (
     FOREIGN KEY (customerId) REFERENCES Customers(customerId),
     FOREIGN KEY (bookId) REFERENCES Books(bookId)
 );
-```
+
+
 #### Purchases Table
 
-| Attribute     |     Type      |
-| ------------- | :-----------: |
-| purchaseId    |   INT (PK)    |
-| customerId    |   INT (FK)    |
-| bookId        |   INT (FK)    |
-| reviewRating  |      INT      |
-| purchaseDate  |     DATE      |
-| purchasePrice | DECIMAL(10,2) |
-
-```sql
 CREATE TABLE Purchases (
     purchaseId INT PRIMARY KEY,
     customerId VARCHAR(10),
@@ -139,10 +156,12 @@ CREATE TABLE Purchases (
     FOREIGN KEY (bookId) REFERENCES Books(bookId)
 );
 ```
+
+```sql
 ## INSERT Data Into Tables
 
 **Inserting Data Into Customers**
-```sql
+
 INSERT INTO Customers (customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate)
 VALUES 
 ('jtg001', 'Ravi Kumar', 'ravi.k@jvbs.com', 'password123', 150.00, '2023-01-15'),
@@ -165,10 +184,10 @@ VALUES
 ('jtg018', 'Nisha Kapoor', 'nisha.k@jvbs.com', 'nishapass', 2700.00, '2022-07-28'),
 ('jtg019', 'Sanjay Thakur', 'sanjay.t@jvbs.com', 'sanjaypass', 2850.00, '2023-04-11'),
 ('jtg020', 'Meera Iyer', 'meera.i@jvbs.com', 'meerasecure', 3000.00, '2022-09-18');
-```
+
 
 **Inserting Data Into Authors**
-```sql
+
 INSERT INTO Authors (authorId, authorName, authorBio)
 VALUES 
 (1, 'Chetan Bhagat', 'Chetan Bhagat is an Indian author, columnist, and speaker. He is known for his bestselling novels, which often explore themes of love, relationships, and social issues.'),
@@ -191,10 +210,9 @@ VALUES
 (18, 'Devdutt Pattanaik', 'Devdutt Pattanaik is an Indian mythologist, speaker, and author known for his interpretations of ancient Indian scriptures, myths, and legends.'),
 (19, 'Shashi Tharoor', 'Shashi Tharoor is an Indian author, politician, and diplomat known for his novels and non-fiction works exploring Indian history, politics, and society.'),
 (20, 'Preeti Shenoy', 'Preeti Shenoy is an Indian author and artist known for her bestselling novels exploring themes of love, relationships, and personal growth.');
-```
 
 **Inserting Data Into Publishers**
-```sql
+
 INSERT INTO Publishers (publisherId, publisherName, publisherAddress)
 VALUES 
 (1, 'Penguin Random House India', 'Noida, Uttar Pradesh, India'),
@@ -217,10 +235,9 @@ VALUES
 (18, 'Simon & Schuster', 'New York, USA'),
 (19, 'Harlequin Enterprises', 'Toronto, Canada'),
 (20, 'Random House', 'New York, USA');
-```
 
 **Inserting Data Into Books**
-```sql
+
 INSERT INTO Books (bookId, bookTitle, bookGenre, authorId, publisherId, bookFormat, bookPrice, publicationDate, bookAverageRating)
 VALUES 
 (1, 'Five Point Someone', 'Fiction', 1, 1, 'Paperback', 299.00, '2004-05-01', 4.2),
@@ -243,10 +260,10 @@ VALUES
 (18, 'Jaya: An Illustrated Retelling of the Mahabharata', 'Mythology', 18, 18, 'Hardcover', 599.00, '2010-05-01', 4.5),
 (19, 'Inglorious Empire', 'Non-fiction', 19, 19, 'Hardcover', 499.00, '2017-05-01', 4.2),
 (20, 'Life is What You Make It', 'Self-help', 20, 20, 'Paperback', 199.00, '2011-05-01', 4.0);
-```
+
 
 **Inserting Data Into Reviews**
-```sql
+
 INSERT INTO Reviews (reviewId, customerId, bookId, reviewRating, reviewComment, reviewDate)
 VALUES 
 (1, 'jtg001', 1, 4.0, 'A compelling read with relatable characters.', '2023-05-01'),
@@ -269,164 +286,161 @@ VALUES
 (18, 'jtg018', 18, 4.5, 'An enlightening and engaging retelling.', '2023-03-01'),
 (19, 'jtg019', 19, 4.2, 'A compelling and informative non-fiction work.', '2023-02-25'),
 (20, 'jtg020', 20, 4.0, 'An inspiring and motivational book.', '2023-01-15');
-```
 
-**Inserting Data Into BookOrders**
-```sql
-INSERT INTO BookOrders (orderId, customerId, orderDate, totalAmount, orderStatus)
+
+**Inserting Data Into Purchases**
+INSERT INTO Purchases (purchaseId, customerId, bookId, purchaseDate, purchasePrice)
 VALUES 
-(1, 'jtg001', '2023-06-01', 500.00, 'Completed'),
-(2, 'jtg002', '2023-06-02', 700.00, 'Completed'),
-(3, 'jtg003', '2023-06-03', 600.00, 'Completed'),
-(4, 'jtg004', '2023-06-04', 800.00, 'Completed'),
-(5, 'jtg005', '2023-06-05', 900.00, 'Completed'),
-(6, 'jtg006', '2023-06-06', 1000.00, 'Completed'),
-(7, 'jtg007', '2023-06-07', 1100.00, 'Completed'),
-(8, 'jtg008', '2023-06-08', 1200.00, 'Completed'),
-(9, 'jtg009', '2023-06-09', 1300.00, 'Completed'),
-(10, 'jtg010', '2023-06-10', 1400.00, 'Completed');
+(1, 'jtg001', 1, '2023-02-10', 12.99),
+(2, 'jtg002', 2, '2022-12-05', 15.50),
+(3, 'jtg003', 3, '2023-01-20', 9.99),
+(4, 'jtg004', 4, '2022-11-18', 18.75),
+(5, 'jtg005', 5, '2023-03-15', 14.95),
+(6, 'jtg006', 6, '2022-09-30', 16.99),
+(7, 'jtg007', 7, '2023-04-25', 13.50),
+(8, 'jtg008', 8, '2022-08-12', 11.25),
+(9, 'jtg009', 9, '2023-05-10', 8.99),
+(10, 'jtg010', 10, '2022-10-20', 12.50),
+(11, 'jtg011', 11, '2023-01-05', 14.99),
+(12, 'jtg012', 12, '2022-11-30', 10.99),
+(13, 'jtg013', 13, '2023-02-15', 9.75),
+(14, 'jtg014', 14, '2022-07-10', 15.25),
+(15, 'jtg015', 15, '2023-03-05', 11.50),
+(16, 'jtg016', 16, '2022-12-15', 14.50),
+(17, 'jtg017', 17, '2023-06-20', 13.99),
+(18, 'jtg018', 18, '2022-09-25', 17.95),
+(19, 'jtg019', 19, '2023-04-05', 10.25),
+(20, 'jtg020', 20, '2022-08-20', 16.50);
 ```
 
-**Inserting Data Into OrderItems**
 ```sql
-INSERT INTO OrderItems (orderItemId, orderId, bookId, quantity, itemPrice)
-VALUES 
-(1, 1, 1, 2, 299.00),
-(2, 2, 2, 1, 499.00),
-(3, 3, 3, 3, 199.00),
-(4, 4, 4, 2, 350.00),
-(5, 5, 5, 2, 399.00),
-(6, 6, 6, 1, 999.00),
-(7, 7, 7, 4, 250.00),
-(8, 8, 8, 3, 799.00),
-(9, 9, 9, 2, 299.00),
-(10, 10, 10, 1, 699.00);
-```
-
 ## REQUIREMENT Capturing
 
 **Power Writers**
-
-```sql
 SELECT authorId, authorName
 FROM Authors
 WHERE 
     (SELECT COUNT(*) FROM Books WHERE Books.authorId = Authors.authorId     AND publicationDate >= CURRENT_DATE - INTERVAL '6 years') >=1;
-```
+
 
 **Loyal Customers**
 
-```sql
 SELECT customerid, customername, totalamountspent
 FROM Customers
 WHERE 
     totalamountspent >= 2500 AND registrationdate >= CURRENT_DATE - INTERVAL '5 year'
 Order by 3 desc;
-```
+
 
 **Well Reviewed Books**
 
-```sql
 SELECT bookid, booktitle, bookaveragerating
 FROM Books
 WHERE 
     bookaveragerating > (SELECT AVG(bookaveragerating) FROM Books)
 order by 3 desc
 Limit 5;
-```
+
 
 **Most Popular Genre by Sales**
 
-```sql
 SELECT 'The highest selling book genre is: '|| bookgenre as Book_Genre,count(1)
 FROM Books
 JOIN Purchases ON Books.bookid = Purchases.bookid
 GROUP BY bookgenre
 ORDER BY SUM(bookprice) DESC 
 LIMIT 1;
-```
+
 
 **10 Most Recent Reviews**
 
-```sql
 SELECT reviewid, customerid, bookid, reviewrating, reviewcomment, reviewdate
 FROM Reviews
 ORDER BY reviewdate DESC
 LIMIT 10;
 ```
 
-## CRUD Operation
-
-**Picked Books table for operation**
-
-#### CREATE table query 
-**_Note: Using same statement from above_**
-
-```sql 
-CREATE TABLE Books (
-    bookId INT PRIMARY KEY,
-    bookTitle VARCHAR(200) NOT NULL,
-    bookGenre VARCHAR(100),
-    authorId INT,
-    publisherId INT,
-    bookFormat VARCHAR(50),
-    bookPrice DECIMAL(10, 2),
-    publicationDate DATE,
-    bookAverageRating DECIMAL(3, 2),
-    FOREIGN KEY (authorId) REFERENCES Authors(authorId),
-    FOREIGN KEY (publisherId) REFERENCES Publishers(publisherId)
-);
-```
-
-### INSERT into table
 
 ```sql
-INSERT INTO Books (bookId, bookTitle, bookGenre, authorId, publisherId, bookFormat, bookPrice, publicationDate, bookAverageRating)
-VALUES 
-(41, 'The Testaments', 'Dystopian', 13, 13, 'physical', 24.99, '2019-09-10', 4.6);
+
+## Typescript Interface
+
+// Name of file: customer_service.ts
+
+import { Pool } from 'pg';
+
+export class Customer {
+    private pool: Pool;
+
+    constructor() {
+        this.pool = new Pool({
+            user: 'root',
+            host: 'localhost',
+            database: '8844006_Jatin_SENG8071_MidtermAssignment',
+            password: 'connect123',
+            port: 5432,
+        });
+    }
+
+	//Customer Creations
+    async create(customerData: any): Promise<any> {
+        const { customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate } = customerData;
+        const query = 'INSERT INTO Customers (customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *';
+        const values = [customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate];
+
+        try {
+            const client = await this.pool.connect();
+            const result = await client.query(query, values);
+            client.release();
+            return result.rows[0];
+        } catch (err) {
+            throw new Error(`Error creating customer: ${err.message}`);
+        }
+    }
+
+	//Reading from Table
+    async read(customerId: string): Promise<any> {
+        const query = 'SELECT * FROM Customers WHERE customerId = $1';
+        const values = [customerId];
+
+        try {
+            const client = await this.pool.connect();
+            const result = await client.query(query, values);
+            client.release();
+            return result.rows[0];
+        } catch (err) {
+            throw new Error(`Error fetching customer: ${err.message}`);
+        }
+    }
+
+	//Performing Update to table:
+    async update(customerId: string, customerData: any): Promise<any> {
+        const { customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate } = customerData;
+        const query = 'UPDATE Customers SET customerName = $1, customerEmail = $2, customerPassword = $3, totalAmountSpent = $4, registrationDate = $5 WHERE customerId = $6 RETURNING *';
+        const values = [customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate, customerId];
+
+        try {
+            const client = await this.pool.connect();
+            const result = await client.query(query, values);
+            client.release();
+            return result.rows[0];
+        } catch (err) {
+            throw new Error(`Error updating customer: ${err.message}`);
+        }
+    }
+
+	//Deleting entry from table:
+    async delete(customerId: string): Promise<void> {
+        const query = 'DELETE FROM Customers WHERE customerId = $1';
+        const values = [customerId];
+
+        try {
+            const client = await this.pool.connect();
+            await client.query(query, values);
+            client.release();
+        } catch (err) {
+            throw new Error(`Error deleting customer: ${err.message}`);
+        }
+    }
+}
 ```
-
-#### READ/SELECT Query:
-
-```sql
-SELECT 
-    b.bookId, 
-    b.bookTitle, 
-    b.bookGenre, 
-    a.authorName, 
-    p.publisherName, 
-    b.bookFormat, 
-    b.bookPrice, 
-    b.publicationDate, 
-    b.bookAverageRating
-FROM 
-    Books b
-JOIN 
-    Authors a ON b.authorId = a.authorId
-JOIN 
-    Publishers p ON b.publisherId = p.publisherId
-WHERE 
-    b.bookAverageRating > 4.5 
-    AND b.publicationDate > '2015-01-01';
-```
-
-#### UPDATE Query
-
-```sql
-UPDATE Books
-SET 
-    bookPrice = 19.99,
-    bookAverageRating = 4.8
-WHERE 
-    bookId = 21;
-```
-
-#### DELETE Query
-
-```sql
-DELETE FROM Books
-WHERE 
-    bookId = 41;
-```
-
-
