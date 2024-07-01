@@ -64,3 +64,56 @@ CREATE TABLE midterm_bookstore.Publishers (
     publisherAddress TEXT
 );
 ```
+#### Books Table
+
+| Attribute         |                  Type                  |
+| ----------------- | :------------------------------------: |
+| bookID            |                INT (PK)                |
+| bookTitle         |              VARCHAR(200)              |
+| bookGenre         |              VARCHAR(50)               |
+| authorID          |                INT (FK)                |
+| publisherID       |                INT (FK)                |
+| bookFormat        | ENUM('physical', 'ebook', 'audiobook') |
+| bookPrice         |             DECIMAL(10,2)              |
+| publicationDate   |                  DATE                  |
+| bookAverageRating |              DECIMAL(3,2)              |
+
+```sql 
+CREATE TABLE midterm_bookstore.Books (
+    bookId INT PRIMARY KEY,
+    bookTitle VARCHAR(200) NOT NULL,
+    bookGenre VARCHAR(100),
+    authorId INT,
+    publisherId INT,
+    bookFormat VARCHAR(50),
+    bookPrice DECIMAL(10, 2),
+    publicationDate DATE,
+    bookAverageRating DECIMAL(3, 2),
+    FOREIGN KEY (authorId) REFERENCES midterm_bookstore.Authors(authorId),
+    FOREIGN KEY (publisherId) REFERENCES midterm_bookstore.Publishers(publisherId)
+);
+```
+
+#### Reviews Table
+
+| Attribute     |   Type   |
+| ------------- | :------: |
+| reviewId      | INT (PK) |
+| customerId    | INT (FK) |
+| bookId        | INT (FK) |
+| reviewRating  |   INT    |
+| reviewComment |   TEXT   |
+| reviewDate    |   DATE   |
+
+```sql 
+CREATE TABLE midterm_bookstore.Reviews (
+    reviewId INT PRIMARY KEY,
+    customerId VARCHAR(10),
+    bookId INT,
+    reviewRating DECIMAL(2, 1),
+    reviewComment TEXT,
+    reviewDate DATE,
+    FOREIGN KEY (customerId) REFERENCES midterm_bookstore.Customers(customerId),
+    FOREIGN KEY (bookId) REFERENCES midterm_bookstore.Books(bookId)
+);
+```
