@@ -355,3 +355,78 @@ ORDER BY reviewdate DESC
 LIMIT 10;
 ```
 
+## CRUD Operation
+
+**Picked Books table for operation**
+
+#### CREATE table query 
+**_Note: Using same statement from above_**
+
+```sql 
+CREATE TABLE midterm_bookstore.Books (
+    bookId INT PRIMARY KEY,
+    bookTitle VARCHAR(200) NOT NULL,
+    bookGenre VARCHAR(100),
+    authorId INT,
+    publisherId INT,
+    bookFormat VARCHAR(50),
+    bookPrice DECIMAL(10, 2),
+    publicationDate DATE,
+    bookAverageRating DECIMAL(3, 2),
+    FOREIGN KEY (authorId) REFERENCES midterm_bookstore.Authors(authorId),
+    FOREIGN KEY (publisherId) REFERENCES midterm_bookstore.Publishers(publisherId)
+);
+```
+
+### INSERT into table
+
+```sql
+INSERT INTO Books (bookId, bookTitle, bookGenre, authorId, publisherId, bookFormat, bookPrice, publicationDate, bookAverageRating)
+VALUES 
+(41, 'The Testaments', 'Dystopian', 13, 13, 'physical', 24.99, '2019-09-10', 4.6);
+```
+
+#### READ/SELECT Query:
+
+```sql
+SELECT 
+    b.bookId, 
+    b.bookTitle, 
+    b.bookGenre, 
+    a.authorName, 
+    p.publisherName, 
+    b.bookFormat, 
+    b.bookPrice, 
+    b.publicationDate, 
+    b.bookAverageRating
+FROM 
+    Books b
+JOIN 
+    Authors a ON b.authorId = a.authorId
+JOIN 
+    Publishers p ON b.publisherId = p.publisherId
+WHERE 
+    b.bookAverageRating > 4.5 
+    AND b.publicationDate > '2015-01-01';
+```
+
+#### UPDATE Query
+
+```sql
+UPDATE Books
+SET 
+    bookPrice = 19.99,
+    bookAverageRating = 4.8
+WHERE 
+    bookId = 21;
+```
+
+#### DELETE Query
+
+```sql
+DELETE FROM Books
+WHERE 
+    bookId = 41;
+```
+
+
