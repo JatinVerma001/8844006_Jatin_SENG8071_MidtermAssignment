@@ -160,7 +160,7 @@ CREATE TABLE Purchases (
 ```sql
 ## INSERT Data Into Tables
 
-**Inserting Data Into Customers**
+--Inserting Data Into Customers
 
 INSERT INTO Customers (customerId, customerName, customerEmail, customerPassword, totalAmountSpent, registrationDate)
 VALUES 
@@ -186,7 +186,7 @@ VALUES
 ('jtg020', 'Meera Iyer', 'meera.i@jvbs.com', 'meerasecure', 3000.00, '2022-09-18');
 
 
-**Inserting Data Into Authors**
+--Inserting Data Into Authors
 
 INSERT INTO Authors (authorId, authorName, authorBio)
 VALUES 
@@ -200,7 +200,7 @@ VALUES
 (8, 'Salman Rushdie', 'Salman Rushdie is a British-Indian novelist and essayist. He is best known for his novel "Midnight''s Children," which won the Booker Prize in 1981.'),
 (9, 'R.K. Narayan', 'R.K. Narayan was an Indian writer known for his works set in the fictional town of Malgudi. His novels and short stories depict everyday Indian life with humor and warmth.'),
 (10, 'Vikram Chandra', 'Vikram Chandra is an Indian-American writer known for his novels and short stories exploring themes of identity, crime, and Indian society.'),
-(11, 'Chitra Banerjee Divakaruni', 'Chitra Banerjee Divakaruni is an Indian-American author and poet. Her works often explore themes of immigration, women's issues, and Indian mythology.'),
+(11, 'Chitra Banerjee Divakaruni', 'Chitra Banerjee Divakaruni is an Indian-American author and poet. Her works often explore themes of immigration, womens issues, and Indian mythology.'),
 (12, 'Rohinton Mistry', 'Rohinton Mistry is an Indian-Canadian author known for his novels depicting life in India and the Indian diaspora, often addressing social and political issues.'),
 (13, 'Amitav Ghosh', 'Amitav Ghosh is an Indian author known for his novels and essays exploring historical and environmental themes, often set in India and Southeast Asia.'),
 (14, 'Anita Nair', 'Anita Nair is an Indian-English writer known for her novels, short stories, and poetry, often reflecting contemporary Indian life and culture.'),
@@ -211,7 +211,8 @@ VALUES
 (19, 'Shashi Tharoor', 'Shashi Tharoor is an Indian author, politician, and diplomat known for his novels and non-fiction works exploring Indian history, politics, and society.'),
 (20, 'Preeti Shenoy', 'Preeti Shenoy is an Indian author and artist known for her bestselling novels exploring themes of love, relationships, and personal growth.');
 
-**Inserting Data Into Publishers**
+
+--Inserting Data Into Publishers
 
 INSERT INTO Publishers (publisherId, publisherName, publisherAddress)
 VALUES 
@@ -236,7 +237,8 @@ VALUES
 (19, 'Harlequin Enterprises', 'Toronto, Canada'),
 (20, 'Random House', 'New York, USA');
 
-**Inserting Data Into Books**
+
+--Inserting Data Into Books
 
 INSERT INTO Books (bookId, bookTitle, bookGenre, authorId, publisherId, bookFormat, bookPrice, publicationDate, bookAverageRating)
 VALUES 
@@ -262,7 +264,7 @@ VALUES
 (20, 'Life is What You Make It', 'Self-help', 20, 20, 'Paperback', 199.00, '2011-05-01', 4.0);
 
 
-**Inserting Data Into Reviews**
+--Inserting Data Into Reviews
 
 INSERT INTO Reviews (reviewId, customerId, bookId, reviewRating, reviewComment, reviewDate)
 VALUES 
@@ -288,7 +290,8 @@ VALUES
 (20, 'jtg020', 20, 4.0, 'An inspiring and motivational book.', '2023-01-15');
 
 
-**Inserting Data Into Purchases**
+--Inserting Data Into Purchases
+
 INSERT INTO Purchases (purchaseId, customerId, bookId, purchaseDate, purchasePrice)
 VALUES 
 (1, 'jtg001', 1, '2023-02-10', 12.99),
@@ -316,14 +319,14 @@ VALUES
 ```sql
 ## REQUIREMENT Capturing
 
-**Power Writers**
+--Power Writers
 SELECT authorId, authorName
 FROM Authors
 WHERE 
     (SELECT COUNT(*) FROM Books WHERE Books.authorId = Authors.authorId     AND publicationDate >= CURRENT_DATE - INTERVAL '6 years') >=1;
 
 
-**Loyal Customers**
+--Loyal Customers
 
 SELECT customerid, customername, totalamountspent
 FROM Customers
@@ -332,7 +335,7 @@ WHERE
 Order by 3 desc;
 
 
-**Well Reviewed Books**
+--Well Reviewed Books
 
 SELECT bookid, booktitle, bookaveragerating
 FROM Books
@@ -342,7 +345,7 @@ order by 3 desc
 Limit 5;
 
 
-**Most Popular Genre by Sales**
+--Most Popular Genre by Sales
 
 SELECT 'The highest selling book genre is: '|| bookgenre as Book_Genre,count(1)
 FROM Books
@@ -352,7 +355,7 @@ ORDER BY SUM(bookprice) DESC
 LIMIT 1;
 
 
-**10 Most Recent Reviews**
+--10 Most Recent Reviews
 
 SELECT reviewid, customerid, bookid, reviewrating, reviewcomment, reviewdate
 FROM Reviews
