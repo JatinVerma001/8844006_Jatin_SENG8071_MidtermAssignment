@@ -32,3 +32,35 @@ CREATE TABLE midterm_bookstore.Customers (
     registrationDate DATE NOT NULL
 );
 ```
+### Authors Table
+
+| Attribute  |     Type     |
+| ---------- | :----------: |
+| authorID   |   INT (PK)   |
+| authorName | VARCHAR(100) |
+| authorBio  |     TEXT     |
+
+```sql
+CREATE TABLE midterm_bookstore.Authors (
+    authorId INT PRIMARY KEY,
+    authorName VARCHAR(100) NOT NULL,
+    authorBio TEXT
+);
+```
+
+
+#### Publishers Table
+
+| Attribute        |     Type     |
+| ---------------- | :----------: |
+| publisherId      |   INT (PK)   |
+| publisherName    | VARCHAR(100) |
+| publisherAddress | VARCHAR(200) |
+
+```sql 
+CREATE TABLE midterm_bookstore.Publishers (
+    publisherId INT PRIMARY KEY,
+    publisherName VARCHAR(100) NOT NULL,
+    publisherAddress TEXT
+);
+```
